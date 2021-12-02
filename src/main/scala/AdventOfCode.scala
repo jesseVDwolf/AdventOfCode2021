@@ -9,12 +9,21 @@ abstract class Solution() {
   val day   : Int
   val year  : Int
 
-  def solve : Unit
-  def solve_bonus : Boolean = { false}
+  def solve       : Unit
+  def solve_bonus : Unit
+  def get_input(cookieHeader: Map[String, String]) : String = {
+    val url = AdventOfCode.AocBaseUrl + year + "/day/" + day + "/input"
+    val response : HttpResponse[String] = Http(url).headers(cookieHeader).asString
+
+    response.body
+  }
 }
 
 /* https://adventofcode.com/2021/day/1 */
-class Day(val year: Int, val day: Int, val input: String) extends Solution {
+class TwentyOneDayOne(cookieHeader: Map[String, String]) extends Solution {
+  val day   : Int = TwentyOneDayOne.day
+  val year  : Int = TwentyOneDayOne.year
+  val input : String = get_input(cookieHeader)
 
   override def solve: Unit = {
     val input_list : Array[Int] = input.split('\n').map(_.toInt)
@@ -28,7 +37,7 @@ class Day(val year: Int, val day: Int, val input: String) extends Solution {
     println(has_increased_count)
   }
 
-  override def solve_bonus : Boolean = {
+  override def solve_bonus : Unit = {
     val input_list : Array[Int] = input.split('\n').map(_.toInt)
 
     var has_increased_count = 0
@@ -43,12 +52,32 @@ class Day(val year: Int, val day: Int, val input: String) extends Solution {
       }
     }
     println(has_increased_count)
-    true
   }
 }
 
-object Day {
-  def apply(year: Int, day: Int, input: String) : Day = { new Day(year, day, input) }
+object TwentyOneDayOne {
+  private val year = 2021
+  private val day = 1
+}
+
+/* https://adventofcode.com/2021/day/1 */
+class TwentyOneDayTwo(cookieHeader: Map[String, String]) extends Solution {
+  val day   : Int = TwentyOneDayTwo.day
+  val year  : Int = TwentyOneDayTwo.year
+  val input : String = get_input(cookieHeader)
+
+  override def solve: Unit = {
+
+  }
+
+  override def solve_bonus : Unit = {
+
+  }
+}
+
+object TwentyOneDayTwo {
+  private val year = 2021
+  private val day = 2
 }
 
 case class Config(args: Map[String, String] = Map())
@@ -57,19 +86,13 @@ object AdventOfCode {
   val AocBaseUrl  = "https://adventofcode.com/"
 
   def main(args: Array[String]): Unit = {
-    val header : Map[String, String] = getCookieHeader(args) match {
+    val cookieHeader : Map[String, String] = getCookieHeader(args) match {
       case Some(kv) => Map("cookie" -> kv.map(_.productIterator.mkString("=")).mkString(""))
       case _ => return
     }
-    val solutions = Map((2021, List(1)))
-    solutions.keys.foreach(year => solutions(year).foreach(day => {
-      val url = AocBaseUrl + year + "/day/" + day + "/input"
-      val response : HttpResponse[String] = Http(url).headers(header).asString
+    val solutions = List(new TwentyOneDayOne(cookieHeader), new TwentyOneDayTwo(cookieHeader))
+    solutions.foreach(solution => println(solution.solve, solution.solve_bonus))
 
-      val daySolution : Day = Day(year, day, response.body)
-      daySolution.solve
-      daySolution.solve_bonus
-    }))
   }
 
   def getCookieHeader(args: Array[String]) : Option[Map[String, String]] = {
