@@ -67,11 +67,33 @@ class TwentyOneDayTwo(cookieHeader: Map[String, String]) extends Solution {
   val input : String = get_input(cookieHeader)
 
   override def solve: Unit = {
+    val instructions = input.split('\n')
+      .map(_.split(' '))
+      .map { case Array(ins: String, num: String) => (ins, num.toInt) }
 
+    var dept, horizontal_position  = 0
+    instructions.view.foreach {
+      case ("forward", num) => horizontal_position += num
+      case ("down", num)    => dept += num
+      case ("up", num)      => dept -= num
+      case _ =>
+    }
+    println(dept * horizontal_position)
   }
 
   override def solve_bonus : Unit = {
+    val instructions = input.split('\n')
+      .map(_.split(' '))
+      .map { case Array(ins: String, num: String) => (ins, num.toInt) }
 
+    var aim, dept, horizontal_position  = 0
+    instructions.view.foreach {
+      case ("forward", num) => horizontal_position += num ; dept += (aim * num)
+      case ("down", num)    => aim += num
+      case ("up", num)      => aim -= num
+      case _ =>
+    }
+    println(dept * horizontal_position)
   }
 }
 
@@ -91,7 +113,7 @@ object AdventOfCode {
       case _ => return
     }
     val solutions = List(new TwentyOneDayOne(cookieHeader), new TwentyOneDayTwo(cookieHeader))
-    solutions.foreach(solution => println(solution.solve, solution.solve_bonus))
+    solutions.foreach(solution => { solution.solve ; solution.solve_bonus })
 
   }
 
