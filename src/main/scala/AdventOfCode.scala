@@ -1,3 +1,5 @@
+package aoc
+
 import scalaj.http._
 import scopt.OptionParser
 import scala.collection.mutable
@@ -60,7 +62,7 @@ object TwentyOneDayOne {
   private val day = 1
 }
 
-/* https://adventofcode.com/2021/day/1 */
+/* https://adventofcode.com/2021/day/2 */
 class TwentyOneDayTwo(cookieHeader: Map[String, String]) extends Solution {
   val day   : Int = TwentyOneDayTwo.day
   val year  : Int = TwentyOneDayTwo.year
@@ -102,6 +104,52 @@ object TwentyOneDayTwo {
   private val day = 2
 }
 
+/* https://adventofcode.com/2021/day/3 */
+class TwentyOneDayThree(cookieHeader: Map[String, String]) extends Solution {
+  val day   : Int = TwentyOneDayThree.day
+  val year  : Int = TwentyOneDayThree.year
+  val input : String = get_input(cookieHeader)
+
+  object Diagnostic extends Enumeration { type Diagnostic = Value ; val GAMMA, EPSILON = Value }
+
+  def getDiagnostic(binaryTable: Array[Array[Int]], diagnosticType: Diagnostic.Value) : Int = {
+    val amountBits = 12
+    var diagnosticValue = 0
+    var sumList : Array[Int] = Array.fill(amountBits)(0)
+
+    for (y <- 0 until binaryTable.length) {
+      for (x <- 0 until amountBits) {
+        sumList(x) += binaryTable(y)(x)
+      }
+    }
+    sumList.foreach(num => {
+      diagnosticValue = (diagnosticValue << 1)
+      diagnosticType match {
+        case Diagnostic.GAMMA   => if (num >= (binaryTable.length * 0.5)) diagnosticValue += 1
+        case Diagnostic.EPSILON => if (num <= (binaryTable.length * 0.5)) diagnosticValue += 1
+        case _ =>
+      }
+    })
+    diagnosticValue
+  }
+  override def solve: Unit = {
+    val binaryTable = input.split('\n')
+      .map(_.toArray)
+      .map(_.map(_.toInt - 48))
+
+    println(getDiagnostic(binaryTable, Diagnostic.GAMMA) * getDiagnostic(binaryTable, Diagnostic.EPSILON))
+  }
+
+  override def solve_bonus : Unit = {
+    
+  }
+}
+
+object TwentyOneDayThree {
+  private val year = 2021
+  private val day = 3
+}
+
 case class Config(args: Map[String, String] = Map())
 
 object AdventOfCode {
@@ -112,7 +160,10 @@ object AdventOfCode {
       case Some(kv) => Map("cookie" -> kv.map(_.productIterator.mkString("=")).mkString(""))
       case _ => return
     }
-    val solutions = List(new TwentyOneDayOne(cookieHeader), new TwentyOneDayTwo(cookieHeader))
+    val solutions = List(
+      new TwentyOneDayOne(cookieHeader), new TwentyOneDayTwo(cookieHeader),
+      new TwentyOneDayThree(cookieHeader)
+    )
     solutions.foreach(solution => { solution.solve ; solution.solve_bonus })
 
   }
