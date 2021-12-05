@@ -19,6 +19,7 @@ object AdventOfCode {
 
   }
 
+  /* TODO specify specific day to run and / or only bonus */
   def getCookieHeader(args: Array[String]) : Option[Map[String, String]] = {
     val parser = new scopt.OptionParser[Config]("scopt") {
       head("scopt", "3.x")
