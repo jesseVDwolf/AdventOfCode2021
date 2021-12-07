@@ -69,7 +69,7 @@ class TwentyOneDaySix(cookieHeader: Map[String, String]) extends Solution {
     val initialState = input.split(',').map(_.trim).map(_.toInt)
     val fishShoal : FishShoal = FishShoal()
 
-    val simulationDays = 256
+    val simulationDays = 80
     fishShoal.createFishShoal(initialState)
     for (_ <- 0 until simulationDays) { fishShoal.simulateDay }
 
@@ -77,7 +77,14 @@ class TwentyOneDaySix(cookieHeader: Map[String, String]) extends Solution {
   }
 
   override def solve_bonus: Unit = {
+    val initialState = input.split(',').map(_.trim).map(_.toInt)
+    val fishShoal : FishShoal = FishShoal()
 
+    val simulationDays = 256
+    fishShoal.createFishShoal(initialState)
+    for (_ <- 0 until simulationDays) { fishShoal.simulateDay }
+
+    println(fishShoal.getShoal.values.sum)
   }
 }
 

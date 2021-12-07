@@ -14,7 +14,8 @@ object AdventOfCode {
     val solutions = List(
       new TwentyOneDayOne(cookieHeader), new TwentyOneDayTwo(cookieHeader),
       new TwentyOneDayThree(cookieHeader), new TwentyOneDayFour(cookieHeader),
-      new TwentyOneDayFive(cookieHeader), new TwentyOneDaySix(cookieHeader)
+      new TwentyOneDayFive(cookieHeader), new TwentyOneDaySix(cookieHeader),
+      new TwentyOneDaySeven(cookieHeader)
     )
     solutions.foreach(solution => { solution.solve ; solution.solve_bonus })
 
