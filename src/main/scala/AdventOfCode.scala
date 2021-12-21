@@ -16,7 +16,8 @@ object AdventOfCode {
       // new TwentyOneDayThree(cookieHeader), new TwentyOneDayFour(cookieHeader),
       // new TwentyOneDayFive(cookieHeader), new TwentyOneDaySix(cookieHeader),
       // new TwentyOneDaySeven(cookieHeader),
-      new TwentyOneDayEight(cookieHeader)
+      // new TwentyOneDayEight(cookieHeader),
+      new TwentyOneDayNine(cookieHeader)
     )
     solutions.foreach(solution => { solution.solve ; solution.solve_bonus })
 
