@@ -31,7 +31,6 @@ class TwentyOneDayTen(cookieHeader: Map[String, String]) extends Solution {
     val openChars = pairs.keys.toArray
     val closeChars = pairs.values.map(_("close").asInstanceOf[Char]).toArray
 
-    /* returns 0 if match found else points for invalid */
     var syntaxErrorScore = 0
     lines.foreach((line: List[Char]) => {
 
