@@ -3,7 +3,7 @@ package days
 import scala.collection.mutable
 import scala.util.control.Breaks._
 
-/* https://adventofcode.com/2021/day/9 */
+/* https://adventofcode.com/2021/day/10 */
 class TwentyOneDayTen(cookieHeader: Map[String, String]) extends Solution {
   val day   : Int = TwentyOneDayTen.day
   val year  : Int = TwentyOneDayTen.year
